@@ -1,46 +1,47 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TSP
 {
     class Program
     {
-        private static DrawingBoard f;
+        private static TSPWindow tspWindow;
+        private static DrawingBoard drawingBoard;
         private static Search tsp;
-        private static readonly int cityAmount = 5;
         [STAThread]
         static void Main(string[] args)
         {
-            Thread t = new Thread(new ThreadStart(StartDrawingBoard));
-            t.Start();
+            StartDrawingBoard();
             Thread.Sleep(200);
-            tsp = new Search(cityAmount, f);
+        }
+        public static void Start(SearchParameter input)
+        {
+            tsp = new Search(drawingBoard, input);
             tsp.Start();
             tsp.Sort(1);
             PrintOptimalPath(tsp.states[0]);
-            Console.ReadKey();
         }
         private static void PrintOptimalPath(State s)
         {
-            Console.WriteLine("Optimal path:");
-            foreach (City c in s.path)
+            String msg = "";
+            msg += "Optimal path:";
+            foreach (int c in s.path)
             {
-                Console.Write("{0}, ", c.Name);
+                msg += " " + tsp.AllCities[c].Name;
             }
-            Console.WriteLine("\nCost - {0}", s.Cost);
-            f.DrawPath(tsp.states[0], tsp.AllCities);
+            msg += "\nCost - " + s.Cost;
+            msg += "\nMemory used at the end : " + (System.Diagnostics.Process.GetCurrentProcess().WorkingSet64/(1024*1024)) + "MB";
+            drawingBoard.DrawPath(tsp.states[0], tsp.AllCities);
+            tspWindow.MessageReported(msg);
+            tsp = null;
+            GC.Collect();
         }
         private static void StartDrawingBoard()
         {
-            f = new DrawingBoard();
-            Application.Run(f);
+            drawingBoard = new DrawingBoard();
+            tspWindow = new TSPWindow(drawingBoard);
+            Application.Run(tspWindow);
         }
        
     }

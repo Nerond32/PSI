@@ -2,24 +2,20 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TSP
 {
-    class DrawingBoard : Form
+    public class DrawingBoard : UserControl
     {
         public DrawingBoard()
         {
             InitializeComponent();
-            CenterToScreen();
             SetStyle(ControlStyles.ResizeRedraw, true);
         }
         private void InitializeComponent()
         {
-            ClientSize = new Size(500, 500);
+            ClientSize = new Size(400, 400);
             Text = "TSP Visualized";
         }
         public void DrawPath(State s, List<City> cities)
@@ -28,8 +24,7 @@ namespace TSP
             {
                 Graphics g = this.CreateGraphics();
                 g.Clear(Color.White);
-                Pen p = new Pen(Color.Black, 4);
-                p.EndCap = LineCap.ArrowAnchor;
+                g.DrawRectangle(new Pen(Color.Black, 4), new Rectangle(0, 0, ClientSize.Width, ClientSize.Height));
                 foreach (City c in cities)
                 {
                     int rectSize = 9;
@@ -37,9 +32,11 @@ namespace TSP
                     g.DrawString(c.Name, drawFont, Brushes.Red, c.Pos.X - rectSize / 2, c.Pos.Y - rectSize * 3);
                     g.FillRectangle(Brushes.Red, c.Pos.X - rectSize / 2, c.Pos.Y - rectSize / 2, rectSize, rectSize);
                 }
+                Pen p = new Pen(Color.Black, 4);
+                p.EndCap = LineCap.ArrowAnchor;
                 for (int i = 1; i < s.path.Count; i++)
                 {
-                    g.DrawLine(p, s.path[i - 1].Pos.X, s.path[i - 1].Pos.Y, s.path[i].Pos.X, s.path[i].Pos.Y);
+                    g.DrawLine(p, cities[s.path[i - 1]].Pos.X, cities[s.path[i - 1]].Pos.Y, cities[s.path[i]].Pos.X, cities[s.path[i]].Pos.Y);
                 }
             }
             catch (Exception e)

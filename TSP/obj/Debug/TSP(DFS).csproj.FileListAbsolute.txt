@@ -4,3 +4,5 @@ D:\workspace\Visual Studio\PSI\TSP\bin\Debug\TSP.pdb
 D:\workspace\Visual Studio\PSI\TSP\obj\Debug\TSP(DFS).csprojResolveAssemblyReference.cache
 D:\workspace\Visual Studio\PSI\TSP\obj\Debug\TSP.exe
 D:\workspace\Visual Studio\PSI\TSP\obj\Debug\TSP.pdb
+D:\workspace\Visual Studio\PSI\TSP\obj\Debug\TSP.TSPWindow.resources
+D:\workspace\Visual Studio\PSI\TSP\obj\Debug\TSP(DFS).csproj.GenerateResource.Cache

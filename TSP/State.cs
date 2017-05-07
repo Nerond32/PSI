@@ -13,16 +13,16 @@ namespace TSP
     {
         public double Cost { get; set; }
         public double Heuristic { get; set; }
-        public List<City> path;
+        public List<Int16> path;
         public State()
         {
             Cost = 0;
             Heuristic = 0;
-            path = new List<City>();
+            path = new List<Int16>();
         }
         public void AddCityToPath(City c)
         {
-            path.Add(c);
+            path.Add((Int16)c.Nr);
         }
         public static object DeepClone(object obj)
         {

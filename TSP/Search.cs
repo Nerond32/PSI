@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace TSP
 {
     class Search
     {
-        private static DrawingBoard f;
-        private List<int> path = new List<int>();
+        public enum Algorithm
+        {
+            BruteForceDSF,
+            BruteForceBSF
+        };
+        private SearchParameter Input { get; set; }
+        private static DrawingBoard drawingBoard;
+        private List<Int16> path = new List<Int16>();
         public List<City> AllCities { get; set; }
         public List<State> states = new List<State>();
-        private int amount;
-        public Search(int amount, DrawingBoard f)
+        public Search(DrawingBoard drawingBoard, SearchParameter Input)
         {
-            this.amount = amount;
-            Search.f = f;
+            this.Input = Input;
+            Search.drawingBoard = drawingBoard;
             AllCities = new List<City>();
         }
         public void Start()
@@ -25,33 +28,41 @@ namespace TSP
             RandomizeLocations();
             State alpha = new State();
             alpha.AddCityToPath(AllCities[0]);
-            states = ChildStates(alpha);
-        }
-        private List<State> ChildStates(State parentState)
-        {
-            List<City> unvisitedCities = new List<City>(AllCities);
-            foreach (City c in parentState.path)
+            switch ((Algorithm)Input.Method)
             {
-                unvisitedCities.Remove(unvisitedCities.Single(s => s.Nr == c.Nr));
+                case Algorithm.BruteForceDSF:
+                    {
+                        states = ChildStatesDSF(alpha);
+                        break;
+                    }
+                case Algorithm.BruteForceBSF:
+                    {
+                        states = ChildStatesBFS(alpha);
+                        break;
+                    }
             }
+        }
+        private List<State> ChildStatesDSF(State parentState)
+        {
+            List<Int16> unvisitedCities = FilterUnvisitedCities(parentState.path, AllCities);
             List<State> childStates = new List<State>();
             if (unvisitedCities.Count == 0)
             {
-                parentState.AddCityToPath(AllCities[0]); // Comment these 2 lines to ignore ending at starting point
-                parentState.Cost += City.TravelCostBetweenCities(parentState.path[parentState.path.Count - 2], AllCities[0]); //
-                childStates.Add(parentState);
-                return childStates;
+                return ReturnBottomChild(parentState, childStates);
             }
             else
             {
-                foreach (City c in unvisitedCities)
+                foreach (Int16 c in unvisitedCities)
                 {
                     State child = (State)State.DeepClone(parentState);
-                    child.AddCityToPath(c);
-                    f.DrawPath(child, AllCities);
-                    Thread.Sleep(200); //Can be commented, added so visualisation is not too fast
-                    child.Cost += City.TravelCostBetweenCities(child.path[child.path.Count - 2], c);
-                    List<State> tmp = ChildStates(child);
+                    child.AddCityToPath(AllCities[c]);
+                    if (Input.Visualize)
+                    {
+                        drawingBoard.DrawPath(child, AllCities);
+                        Thread.Sleep(200);
+                    }
+                    child.Cost += City.TravelCostBetweenCities(AllCities[child.path.Count - 2], AllCities[c]);
+                    List<State> tmp = ChildStatesDSF(child);
                     foreach (State s in tmp)
                     {
                         childStates.Add(s);
@@ -60,14 +71,70 @@ namespace TSP
                 return childStates;
             }
         }
+        private List<State> ChildStatesBFS(State parentState)
+        {
+            List<Int16> unvisitedCities = FilterUnvisitedCities(parentState.path, AllCities);
+            List<State> childStates = new List<State>();
+            if (unvisitedCities.Count == 0)
+            {
+                return ReturnBottomChild(parentState, childStates);
+            }
+            else
+            {
+                List<State> subStates = new List<State>();
+                foreach(Int16 c in unvisitedCities)
+                {
+                    subStates.Add((State)State.DeepClone(parentState));
+                    subStates[subStates.Count - 1].AddCityToPath(AllCities[c]);
+                    if (Input.Visualize)
+                    {
+                        drawingBoard.DrawPath(subStates[subStates.Count - 1], AllCities);
+                        Thread.Sleep(1000);
+                    }
+                    subStates[subStates.Count - 1].Cost += City.TravelCostBetweenCities(AllCities[subStates[subStates.Count - 1].path.Count - 2], AllCities[c]);
+                }
+                /*foreach(State s in subStates)
+                {
+                    List<State> tmp = ChildStatesBFS(s);
+                    foreach (State t in tmp)
+                    {
+                        childStates.Add(t);
+                    }
+                }*/
+                return childStates;
+            }
+        }
+        private static List<Int16> FilterUnvisitedCities(List<Int16> filter, List<City> cities)
+        {
+            List<Int16> unvisitedCities = new List<Int16>();
+            foreach (City c in cities)
+            {
+                unvisitedCities.Add((Int16)c.Nr);
+            }
+            foreach (Int16 f in filter)
+            {
+                unvisitedCities.Remove(unvisitedCities.Single(s => s == f));
+            }
+            return unvisitedCities;
+        }
+        private List<State> ReturnBottomChild(State parentState, List<State> childStates)
+        {
+            if (Input.ReturnToStart)
+            {
+                parentState.AddCityToPath(AllCities[0]);
+                parentState.Cost += City.TravelCostBetweenCities(AllCities[parentState.path.Count - 2], AllCities[0]);
+            }
+            childStates.Add(parentState);
+            return childStates;
+        }
         public void RandomizeLocations()
         {
             Random rnd = new Random();
-            for (int i = 0; i < amount; i++)
+            for (int i = 0; i < Input.Amount; i++)
             {
-                path.Add(i);
+                path.Add((Int16)i);
                 String cName = "city" + i;
-                AllCities.Add(new City(rnd.Next(1, 400), rnd.Next(1, 400), i, cName));
+                AllCities.Add(new City(rnd.Next(1, 350), rnd.Next(1, 350), i, cName));
             }
         }
         public void Sort(int criteria)
