@@ -29,7 +29,7 @@ namespace TSP
                     if (SearchInfo.Visualize)
                     {
                         DrawingBoard.DrawPath(child, SearchInfo.AllCities);
-                        Thread.Sleep(200);
+                        Thread.Sleep(500);
                     }
                     child.Cost += City.TravelCostBetweenCities(SearchInfo.AllCities[child.path.Count - 2], SearchInfo.AllCities[c]);
                     List<State> tmp = ChildStates(child);

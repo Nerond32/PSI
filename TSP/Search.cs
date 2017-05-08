@@ -11,7 +11,8 @@ namespace TSP
         public enum Algorithm
         {
             BruteForceDSF,
-            BruteForceBSF
+            BruteForceBSF,
+            GreedyAlgorithm
         };
         public List<State> states = new List<State>();
         public SearchParameter SearchInfo { get; set; }
@@ -42,6 +43,12 @@ namespace TSP
                 case Algorithm.BruteForceBSF:
                     {
                         tspAlg = new BruteForceBFS_TSPAlgorithm(SearchInfo, DrawingBoard);
+                        states = tspAlg.ChildStates(alpha);
+                        break;
+                    }
+                case Algorithm.GreedyAlgorithm:
+                    {
+                        tspAlg = new TSPGreedyAlgorithm(SearchInfo, DrawingBoard);
                         states = tspAlg.ChildStates(alpha);
                         break;
                     }
