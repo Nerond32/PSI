@@ -53,8 +53,8 @@ namespace TSP
                 {
                     input.Visualize = visualizeCheckBox.Checked;
                     input.ReturnToStart = returnToStartCheckBox.Checked;
-                    input.Method = algorithmComboBox.SelectedIndex;
-                    searcher = new Thread(() => Program.Start(input));
+                    int method = algorithmComboBox.SelectedIndex;
+                    searcher = new Thread(() => Program.Start(input, method));
                     searcher.Start();
                 }
                 msgLabel.Text = "";
@@ -83,6 +83,7 @@ namespace TSP
             {
                 searcher.Abort();
             }
+            GC.Collect();
         }
         private void citiesAmountInput_KeyPress(object sender, KeyPressEventArgs e)
         {

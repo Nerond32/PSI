@@ -15,9 +15,9 @@ namespace TSP
             StartDrawingBoard();
             Thread.Sleep(200);
         }
-        public static void Start(SearchParameter input)
+        public static void Start(SearchParameter input, int method)
         {
-            tsp = new Search(drawingBoard, input);
+            tsp = new Search(drawingBoard, input, method);
             tsp.Start();
             tsp.Sort(1);
             PrintOptimalPath(tsp.states[0]);
@@ -28,11 +28,11 @@ namespace TSP
             msg += "Optimal path:";
             foreach (int c in s.path)
             {
-                msg += " " + tsp.AllCities[c].Name;
+                msg += " " + tsp.SearchInfo.AllCities[c].Name;
             }
             msg += "\nCost - " + s.Cost;
             msg += "\nMemory used at the end : " + (System.Diagnostics.Process.GetCurrentProcess().WorkingSet64/(1024*1024)) + "MB";
-            drawingBoard.DrawPath(tsp.states[0], tsp.AllCities);
+            drawingBoard.DrawPath(tsp.states[0], tsp.SearchInfo.AllCities);
             tspWindow.MessageReported(msg);
             tsp = null;
             GC.Collect();
