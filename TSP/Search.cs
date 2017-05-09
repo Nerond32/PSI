@@ -12,7 +12,8 @@ namespace TSP
         {
             BruteForceDSF,
             BruteForceBSF,
-            GreedyAlgorithm
+            GreedyAlgorithm,
+            GeneticAlgorithm
         };
         public List<State> states = new List<State>();
         public SearchParameter SearchInfo { get; set; }
@@ -37,22 +38,25 @@ namespace TSP
                 case Algorithm.BruteForceDSF:
                     {
                         tspAlg = new BruteForceDFS_TSPAlgorithm(SearchInfo, DrawingBoard);
-                        states = tspAlg.ChildStates(alpha);
                         break;
                     }
                 case Algorithm.BruteForceBSF:
                     {
                         tspAlg = new BruteForceBFS_TSPAlgorithm(SearchInfo, DrawingBoard);
-                        states = tspAlg.ChildStates(alpha);
                         break;
                     }
                 case Algorithm.GreedyAlgorithm:
                     {
                         tspAlg = new TSPGreedyAlgorithm(SearchInfo, DrawingBoard);
-                        states = tspAlg.ChildStates(alpha);
+                        break;
+                    }
+                case Algorithm.GeneticAlgorithm:
+                    {
+                        tspAlg = new TSPGeneticAlgorithm(SearchInfo, DrawingBoard);
                         break;
                     }
             }
+            states = tspAlg.ChildStates(alpha);
         }
         public void RandomizeLocations()
         {
@@ -66,21 +70,8 @@ namespace TSP
         }
         public void Sort(int criteria)
         {
-            states = Sort(states, criteria);
+            states = State.Sort(states, criteria);
         }
-        private static List<State> Sort(List<State> statesToSort, int criteria)
-        {
-            List<State> sortedList = new List<State>();
-            if (criteria == 1)
-            {
-                sortedList = statesToSort.OrderBy(o => o.Cost).ToList();
-            }
-            else if (criteria == 2)
-            {
-                sortedList = statesToSort.OrderBy(o => o.Heuristic).ToList();
-            }
-            else Console.WriteLine("Wrong sorting criteria");
-            return sortedList;
-        }
+        
     }
 }

@@ -37,5 +37,19 @@ namespace TSP
             }
             return objResult;
         }
+        public static List<State> Sort(List<State> statesToSort, int criteria)
+        {
+            List<State> sortedList = new List<State>();
+            if (criteria == 1)
+            {
+                sortedList = statesToSort.OrderBy(o => o.Cost).ToList();
+            }
+            else if (criteria == 2)
+            {
+                sortedList = statesToSort.OrderBy(o => o.Heuristic).ToList();
+            }
+            else Console.WriteLine("Wrong sorting criteria");
+            return sortedList;
+        }
     }
 }

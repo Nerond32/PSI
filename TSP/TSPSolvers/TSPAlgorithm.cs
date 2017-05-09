@@ -25,7 +25,13 @@ namespace TSP
             }
             foreach (Int16 f in filter)
             {
-                unvisitedCities.Remove(unvisitedCities.Single(s => s == f));
+                try
+                {
+                    unvisitedCities.Remove(unvisitedCities.Single(s => s == f));
+                }
+                catch (InvalidOperationException)
+                {
+                }
             }
             return unvisitedCities;
         }
@@ -34,7 +40,7 @@ namespace TSP
             if (SearchInfo.ReturnToStart)
             {
                 parentState.AddCityToPath(SearchInfo.AllCities[0]);
-                parentState.Cost += City.TravelCostBetweenCities(SearchInfo.AllCities[parentState.path.Count - 2], SearchInfo.AllCities[0]);
+                parentState.Cost += City.TravelCostBetweenCities(SearchInfo.AllCities[parentState.path[parentState.path.Count - 2]], SearchInfo.AllCities[0]);
             }
             childStates.Add(parentState);
             return childStates;

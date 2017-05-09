@@ -35,7 +35,7 @@ namespace TSP.TSPSolvers
                             DrawingBoard.DrawPath(child, SearchInfo.AllCities);
                             Thread.Sleep(500);
                         }
-                        child.Cost += City.TravelCostBetweenCities(SearchInfo.AllCities[child.path.Count - 2], SearchInfo.AllCities[c]);
+                        child.Cost += City.TravelCostBetweenCities(SearchInfo.AllCities[child.path[child.path.Count - 2]], SearchInfo.AllCities[c]);
                         bfsQueue.Enqueue(child);
                     }
                     bfsQueue.Dequeue();

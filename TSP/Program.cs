@@ -6,7 +6,7 @@ namespace TSP
 {
     class Program
     {
-        private static TSPWindow tspWindow;
+        public static TSPWindow tspWindow;
         private static DrawingBoard drawingBoard;
         private static Search tsp;
         [STAThread]
@@ -20,6 +20,7 @@ namespace TSP
             tsp = new Search(drawingBoard, input, method);
             tsp.Start();
             tsp.Sort(1);
+            drawingBoard.DrawPath(tsp.states[0], tsp.SearchInfo.AllCities);
             PrintOptimalPath(tsp.states[0]);
         }
         private static void PrintOptimalPath(State s)

@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TSPSolvers\BruteForceBFS_TSPAlgorithm.cs" />
+    <Compile Include="TSPSolvers\TSPGeneticAlgorithm.cs" />
     <Compile Include="TSPSolvers\TSPGreedyAlgorithm.cs" />
     <Compile Include="TSPSolvers\TSPAlgorithm.cs" />
     <Compile Include="TSPSolvers\BruteForceDFS_TSPAlgorithm.cs" />

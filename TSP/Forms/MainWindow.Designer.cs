@@ -30,16 +30,23 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TSPWindow));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.returnToStartCheckBox = new System.Windows.Forms.CheckBox();
             this.abortButton = new System.Windows.Forms.Button();
+            this.visualizeCheckBox = new System.Windows.Forms.CheckBox();
             this.algorithmComboBox = new System.Windows.Forms.ComboBox();
             this.algLabel = new System.Windows.Forms.Label();
             this.cAmountLabel = new System.Windows.Forms.Label();
             this.citiesAmountInput = new System.Windows.Forms.TextBox();
             this.startButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.visualizeCheckBox = new System.Windows.Forms.CheckBox();
+            this.populationTextBox = new System.Windows.Forms.TextBox();
+            this.generationsTextBox = new System.Windows.Forms.TextBox();
+            this.labelMutationChance = new System.Windows.Forms.Label();
+            this.populationLabel = new System.Windows.Forms.Label();
+            this.generationsLabel = new System.Windows.Forms.Label();
+            this.mutationChanceTextBox = new System.Windows.Forms.TextBox();
+            this.isMutatingCheckBox = new System.Windows.Forms.CheckBox();
             this.msgLabel = new System.Windows.Forms.Label();
-            this.returnToStartCheckBox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -59,11 +66,23 @@
             this.tableLayoutPanel1.Controls.Add(this.startButton, 0, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
+            // returnToStartCheckBox
+            // 
+            resources.ApplyResources(this.returnToStartCheckBox, "returnToStartCheckBox");
+            this.returnToStartCheckBox.Name = "returnToStartCheckBox";
+            this.returnToStartCheckBox.UseVisualStyleBackColor = true;
+            // 
             // abortButton
             // 
             resources.ApplyResources(this.abortButton, "abortButton");
             this.abortButton.Name = "abortButton";
             this.abortButton.UseVisualStyleBackColor = true;
+            // 
+            // visualizeCheckBox
+            // 
+            resources.ApplyResources(this.visualizeCheckBox, "visualizeCheckBox");
+            this.visualizeCheckBox.Name = "visualizeCheckBox";
+            this.visualizeCheckBox.UseVisualStyleBackColor = true;
             // 
             // algorithmComboBox
             // 
@@ -100,6 +119,13 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.populationTextBox);
+            this.splitContainer1.Panel1.Controls.Add(this.generationsTextBox);
+            this.splitContainer1.Panel1.Controls.Add(this.labelMutationChance);
+            this.splitContainer1.Panel1.Controls.Add(this.populationLabel);
+            this.splitContainer1.Panel1.Controls.Add(this.generationsLabel);
+            this.splitContainer1.Panel1.Controls.Add(this.mutationChanceTextBox);
+            this.splitContainer1.Panel1.Controls.Add(this.isMutatingCheckBox);
             this.splitContainer1.Panel1.Controls.Add(this.msgLabel);
             this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel1);
             // 
@@ -107,22 +133,46 @@
             // 
             this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
             // 
-            // visualizeCheckBox
+            // populationTextBox
             // 
-            resources.ApplyResources(this.visualizeCheckBox, "visualizeCheckBox");
-            this.visualizeCheckBox.Name = "visualizeCheckBox";
-            this.visualizeCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.populationTextBox, "populationTextBox");
+            this.populationTextBox.Name = "populationTextBox";
+            // 
+            // generationsTextBox
+            // 
+            resources.ApplyResources(this.generationsTextBox, "generationsTextBox");
+            this.generationsTextBox.Name = "generationsTextBox";
+            // 
+            // labelMutationChance
+            // 
+            resources.ApplyResources(this.labelMutationChance, "labelMutationChance");
+            this.labelMutationChance.Name = "labelMutationChance";
+            // 
+            // populationLabel
+            // 
+            resources.ApplyResources(this.populationLabel, "populationLabel");
+            this.populationLabel.Name = "populationLabel";
+            // 
+            // generationsLabel
+            // 
+            resources.ApplyResources(this.generationsLabel, "generationsLabel");
+            this.generationsLabel.Name = "generationsLabel";
+            // 
+            // mutationChanceTextBox
+            // 
+            resources.ApplyResources(this.mutationChanceTextBox, "mutationChanceTextBox");
+            this.mutationChanceTextBox.Name = "mutationChanceTextBox";
+            // 
+            // isMutatingCheckBox
+            // 
+            resources.ApplyResources(this.isMutatingCheckBox, "isMutatingCheckBox");
+            this.isMutatingCheckBox.Name = "isMutatingCheckBox";
+            this.isMutatingCheckBox.UseVisualStyleBackColor = true;
             // 
             // msgLabel
             // 
             resources.ApplyResources(this.msgLabel, "msgLabel");
             this.msgLabel.Name = "msgLabel";
-            // 
-            // returnToStartCheckBox
-            // 
-            resources.ApplyResources(this.returnToStartCheckBox, "returnToStartCheckBox");
-            this.returnToStartCheckBox.Name = "returnToStartCheckBox";
-            this.returnToStartCheckBox.UseVisualStyleBackColor = true;
             // 
             // TSPWindow
             // 
@@ -154,5 +204,12 @@
         private System.Windows.Forms.CheckBox visualizeCheckBox;
         private System.Windows.Forms.Label msgLabel;
         private System.Windows.Forms.CheckBox returnToStartCheckBox;
+        private System.Windows.Forms.Label populationLabel;
+        private System.Windows.Forms.Label generationsLabel;
+        private System.Windows.Forms.TextBox mutationChanceTextBox;
+        private System.Windows.Forms.CheckBox isMutatingCheckBox;
+        private System.Windows.Forms.TextBox populationTextBox;
+        private System.Windows.Forms.TextBox generationsTextBox;
+        private System.Windows.Forms.Label labelMutationChance;
     }
 }
